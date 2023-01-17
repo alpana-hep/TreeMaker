@@ -7,6 +7,11 @@ from TreeMaker.TreeMaker.makeJetVars import makeJetVars, makeGoodJets, makeJetVa
 from TreeMaker.TreeMaker.doHadTauBkg import doHadTauBkg, makeJetVarsHadTau
 from TreeMaker.TreeMaker.doLostLeptonBkg import doLostLeptonBkg
 from TreeMaker.TreeMaker.doZinvBkg import doZinvBkg, reclusterZinv
+from TreeMaker.TreeMaker.doPhotons import doPhotonVars
+from RecoEgamma.EgammaTools.EgammaPostRecoTools import setupEgammaPostRecoSeq                                                                     
+#setupEgammaPostRecoSeq(process,era='2018-Prompt')                                                                                                 
+#a sequence egammaPostRecoSeq has now been created and should be added to your path, eg process.p=cms.Path(process.egammaPostRecoSeq)             
+#process.p=cms.Path(process.egammaPostRecoSeq)
 
 class maker:
     def __init__(self,parameters):
@@ -40,7 +45,7 @@ class maker:
         self.getParamDefault("hadtau", False)
         self.getParamDefault("hadtaurecluster", 0)
         self.getParamDefault("doZinv", True)
-
+        #self.getParamDefault("doPhotons",True);
         # special signal stuff
         self.getParamDefault("systematics",True);
         self.getParamDefault("semivisible",True);
@@ -181,3 +186,4 @@ class maker:
     doLostLeptonBkg = doLostLeptonBkg
     doZinvBkg = doZinvBkg
     reclusterZinv = reclusterZinv
+    #doPhotonVars = doPhotonVars

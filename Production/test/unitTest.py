@@ -139,7 +139,7 @@ def unitTest():
     if test==-1: name = ""
 
     # list of tests
-    mytests = []
+    mytests = []    
     defineTests(mytests,scenario,name,numevents,command,dataset,inputFilesConfig)
 
     # sanity check for defining an on-the-fly test

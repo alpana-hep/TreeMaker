@@ -31,12 +31,25 @@ print "************************************************"
 import FWCore.ParameterSet.Config as cms
 from Configuration.StandardSequences.Eras import eras
 from TreeMaker.TreeMaker.TMEras import TMeras
+from RecoEgamma.EgammaTools.EgammaPostRecoTools import setupEgammaPostRecoSeq
+#setupEgammaPostRecoSeq(process,era='2018-Prompt')  
+# #a sequence egammaPostRecoSeq has now been created and should be added to your path, eg process.p=cms.Path(process.egammaPostRecoSeq)
+# process.p=cms.Path(process.egammaPostRecoSeq)
 eralist = []
 if len(theMaker.era)>0:
 	eralist.append(getattr(eras,theMaker.era))
 if len(theMaker.localera)>0:
 	eralist.append(getattr(TMeras,theMaker.localera))
 process = cms.Process("RA2EventSelection",*eralist)
+setupEgammaPostRecoSeq(process,era='2018-Prompt',
+                       runVID=True,
+                       eleIDModules=['RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_Fall17_94X_V2_cff',
+                                    'RecoEgamma.ElectronIdentification.Identification.heepElectronID_HEEPV70_cff',
+                                     'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_iso_V2_cff',
+                                     'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_noIso_V2_cff'],
+                       phoIDModules=['RecoEgamma.PhotonIdentification.Identification.mvaPhotonID_Fall17_94X_V2_cff',
+                                     'RecoEgamma.PhotonIdentification.Identification.cutBasedPhotonID_Fall17_94X_V2_cff']                   
+                       )
 
 # configure geometry & conditions
 process.load("Configuration.StandardSequences.GeometryRecoDB_cff")
@@ -79,7 +92,6 @@ if tmi:
 
 if trace:
     process.add_(cms.Service("Tracer", dumpPathsAndConsumes = cms.untracked.bool(True)))
-
 # setup makeTree modules
 process = theMaker.makeTreeFromMiniAOD(process)
 
