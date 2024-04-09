@@ -716,14 +716,11 @@ def makeTreeFromMiniAOD(self,process):
     self.VectorInt.extend(_TriggerBranchesList)
     self.TitleMap.extend(list(chain.from_iterable([[x,_joinedTriggerNameList] for x in _TriggerBranchesList])))
 
-    if "SingleElectron" in process.source.fileNames[0] and "2016" in process.source.fileNames[0]:
+    if "SingleElectron" in process.source.fileNames[0] or "EGamma" in process.source.fileNames[0] :
         process.TriggerProducer.saveHLTObj = cms.bool(True)
         process.TriggerProducer.saveHLTObjPath = cms.string("HLT_Ele27_WPTight_Gsf_v")
-        process.TriggerProducer.saveHLTObjName = cms.string("HLTElectronObjects")
-        self.VectorLorentzVector.extend(['TriggerProducer:HLTElectronObjects'])
-    elif ("SingleElectron" in process.source.fileNames[0] and "2017" in process.source.fileNames[0]) or ("EGamma" in process.source.fileNames[0] and "2018" in processsource.fileNames[0]):
-        process.TriggerProducer.saveHLTObj = cms.bool(True)
-        process.TriggerProducer.saveHLTObjPath = cms.string("HLT_Ele35_WPTight_Gsf_v")
+        TMeras.TMUL2017.toModify(process.TriggerProducer, saveHLTObjPath = "HLT_Ele35_WPTight_Gsf_v")
+        TMeras.TMUL2018.toModify(process.TriggerProducer, saveHLTObjPath = "HLT_Ele35_WPTight_Gsf_v")
         process.TriggerProducer.saveHLTObjName = cms.string("HLTElectronObjects")
         self.VectorLorentzVector.extend(['TriggerProducer:HLTElectronObjects'])
     elif "SingleMuon" in process.source.fileNames[0]:
