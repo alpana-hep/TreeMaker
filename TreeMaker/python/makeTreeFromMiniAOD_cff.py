@@ -719,8 +719,7 @@ def makeTreeFromMiniAOD(self,process):
     if "SingleElectron" in process.source.fileNames[0] or "EGamma" in process.source.fileNames[0] :
         process.TriggerProducer.saveHLTObj = cms.bool(True)
         process.TriggerProducer.saveHLTObjPath = cms.string("HLT_Ele27_WPTight_Gsf_v")
-        TMeras.TMUL2017.toModify(process.TriggerProducer, saveHLTObjPath = "HLT_Ele35_WPTight_Gsf_v")
-        TMeras.TMUL2018.toModify(process.TriggerProducer, saveHLTObjPath = "HLT_Ele35_WPTight_Gsf_v")
+        (TMeras.TMUL2017 | TMeras.TMUL2018).toModify(process.TriggerProducer, saveHLTObjPath = "HLT_Ele35_WPTight_Gsf_v")
         process.TriggerProducer.saveHLTObjName = cms.string("HLTElectronObjects")
         self.VectorLorentzVector.extend(['TriggerProducer:HLTElectronObjects'])
     elif "SingleMuon" in process.source.fileNames[0]:
