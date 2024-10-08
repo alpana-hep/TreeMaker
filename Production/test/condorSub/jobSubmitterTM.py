@@ -34,7 +34,9 @@ class jobSubmitterTM(jobSubmitter):
             
         if len(options.output)==0 and (options.prepare or not options.count):
             parser.error("Required option: --output [directory]")
-            
+
+        options.nFiles = int(options.nFiles)
+
     def generateExtra(self,job):
         super(jobSubmitterTM,self).generateExtra(job)
         job.patterns.update([

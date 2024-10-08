@@ -105,6 +105,7 @@ DEFAULT_NAMED_PTR(D,NsubjettinessTau1);
 DEFAULT_NAMED_PTR(D,NsubjettinessTau2);
 DEFAULT_NAMED_PTR(D,NsubjettinessTau3);
 DEFAULT_NAMED_PTR(D,NsubjettinessTau4);
+DEFAULT_NAMED_PTR(D,NsubjettinessTau5);
 DEFAULT_NAMED_PTR(D,overflow);
 DEFAULT_NAMED_PTR(D,girth);
 DEFAULT_NAMED_PTR(D,momenthalf);
@@ -123,6 +124,20 @@ DEFAULT_NAMED_PTR(D,ecfM3b1);
 DEFAULT_NAMED_PTR(D,ecfM3b2);
 DEFAULT_NAMED_PTR(D,ecfD2b1);
 DEFAULT_NAMED_PTR(D,ecfD2b2);
+DEFAULT_NAMED_PTR(D,ecfFullN2b1);
+DEFAULT_NAMED_PTR(D,ecfFullN2b2);
+DEFAULT_NAMED_PTR(D,ecfFullN3b1);
+DEFAULT_NAMED_PTR(D,ecfFullN3b2);
+DEFAULT_NAMED_PTR(D,ecfFullC2b1);
+DEFAULT_NAMED_PTR(D,ecfFullC2b2);
+DEFAULT_NAMED_PTR(D,ecfFullC3b1);
+DEFAULT_NAMED_PTR(D,ecfFullC3b2);
+DEFAULT_NAMED_PTR(D,ecfFullM2b1);
+DEFAULT_NAMED_PTR(D,ecfFullM2b2);
+DEFAULT_NAMED_PTR(D,ecfFullM3b1);
+DEFAULT_NAMED_PTR(D,ecfFullM3b2);
+DEFAULT_NAMED_PTR(D,ecfFullD2b1);
+DEFAULT_NAMED_PTR(D,ecfFullD2b2);
 DEFAULT_NAMED_PTR(D,neutralPuppiMultiplicity);
 DEFAULT_NAMED_PTR(D,neutralHadronPuppiMultiplicity);
 DEFAULT_NAMED_PTR(D,photonPuppiMultiplicity);
@@ -397,6 +412,27 @@ class NamedPtr_NumChadrons : public NamedPtr<int> {
 		void get_property(const pat::Jet& Jet) override { push_back(Jet.jetFlavourInfo().getcHadrons().size()); }
 };
 DEFINE_NAMED_PTR(NumChadrons);
+
+class NamedPtr_nConstituents : public NamedPtr<int> {
+	public:
+		using NamedPtr<int>::NamedPtr;
+		void get_property(const pat::Jet& Jet) override { push_back(Jet.numberOfDaughters()); }
+};
+DEFINE_NAMED_PTR(nConstituents);
+
+class NamedPtr_nConstituentsSoftDrop : public NamedPtr<int> {
+	public:
+		using NamedPtr<int>::NamedPtr;
+		void get_property(const pat::Jet& Jet) override {
+			int nconst = 0;
+			auto const & subjets = Jet.subjets(extraInfo.at(0));
+			for ( auto const & it : subjets ) {
+				nconst += it->numberOfDaughters();
+			}
+			push_back(nconst);
+		}
+};
+DEFINE_NAMED_PTR(nConstituentsSoftDrop);
 
 //----------------------------------------------------------------------------------------------------------------------------------------
 //math::PtEtaPhiELorentzVectors

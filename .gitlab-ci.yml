@@ -51,10 +51,8 @@ before_script:
         CONTEXT_DIR: "./"
         DOCKERFILE_DIR: ".docker/"
         IMAGE_NAME: treemaker
-    tags:
-        - docker-privileged-xl
     image:
-        name: gitlab-registry.cern.ch/ci-tools/docker-image-builder
+        name: gcr.io/kaniko-project/executor:debug
         entrypoint: [""]
     script:
         # Build and push the image from the Dockerfile at the root of the project.

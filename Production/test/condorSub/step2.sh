@@ -114,7 +114,7 @@ for FILE in *.root; do
 		echo -e "\t   After change: ${FILE_DST}"
 	fi
 	echo "${CMDSTR} -f ${FILE} ${OUTDIR}/${FILE_DST}"
-	stageOut ${GFLAG} -x ${COPYARGS} -i ${FILE} -o ${OUTDIR}/${FILE_DST} -r -c '*.root'
+	stageOut ${GFLAG} -x "${COPYARGS}" -i ${FILE} -o ${OUTDIR}/${FILE_DST} -r -c '*.root'
 	XRDEXIT=$?
 	if [[ $XRDEXIT -ne 0 ]]; then
 		echo "exit code $XRDEXIT, failure in $CMDSTR"

@@ -306,8 +306,6 @@ def assign(args):
             out = [
                 "[manage]",
                 "dir = .",
-                "[caches]",
-                "$CMSSW_BASE/test = 1",
                 "[submit]",
                 "input = {}".format(','.join(assignments[user][1]))
             ]

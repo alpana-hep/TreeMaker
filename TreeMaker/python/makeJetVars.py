@@ -263,6 +263,7 @@ def makeJetVars(self, process, JetTag, suff, storeProperties, SkipTag=cms.VInput
                 'JetProperties'+suff+':photonMultiplicity(Jets'+suff+'_photonMultiplicity)',
                 'JetProperties'+suff+':chargedMultiplicity(Jets'+suff+'_chargedMultiplicity)',
                 'JetProperties'+suff+':neutralMultiplicity(Jets'+suff+'_neutralMultiplicity)',
+                'JetProperties'+suff+':nConstituents(Jets'+suff+'_nConstituents)',
             ])
 
             if self.doQG:
@@ -492,6 +493,8 @@ def makeJetVarsAK8(self, process, JetTag, suff, storeProperties, SkipTag=cms.VIn
                 'muonMultiplicity',
                 'chargedMultiplicity',
                 'neutralPuppiMultiplicity',
+                'nConstituents',
+                'nConstituentsSoftDrop',
                 'chargedHadronEnergyFraction',
                 'neutralHadronEnergyFraction',
                 'chargedEmEnergyFraction',
@@ -505,6 +508,7 @@ def makeJetVarsAK8(self, process, JetTag, suff, storeProperties, SkipTag=cms.VIn
             JetPropertiesAK8.neutralHadronPuppiMultiplicity = cms.vstring(puppiSpecific+":neutralHadronPuppiMultiplicity")
             JetPropertiesAK8.neutralPuppiMultiplicity = cms.vstring(puppiSpecific+":neutralPuppiMultiplicity")
             JetPropertiesAK8.photonPuppiMultiplicity = cms.vstring(puppiSpecific+":photonPuppiMultiplicity")
+            JetPropertiesAK8.nConstituentsSoftDrop = cms.vstring(subjetTag) # computed from subjets
             self.VectorDouble.extend([
                 'JetProperties'+suff+':muonEnergyFraction(Jets'+suff+'_muonEnergyFraction)',
                 'JetProperties'+suff+':chargedHadronEnergyFraction(Jets'+suff+'_chargedHadronEnergyFraction)',
@@ -524,6 +528,8 @@ def makeJetVarsAK8(self, process, JetTag, suff, storeProperties, SkipTag=cms.VIn
                 'JetProperties'+suff+':electronMultiplicity(Jets'+suff+'_electronMultiplicity)',
                 'JetProperties'+suff+':muonMultiplicity(Jets'+suff+'_muonMultiplicity)',
                 'JetProperties'+suff+':chargedMultiplicity(Jets'+suff+'_chargedMultiplicity)',
+                'JetProperties'+suff+':nConstituents(Jets'+suff+'_nConstituents)',
+                'JetProperties'+suff+':nConstituentsSoftDrop(Jets'+suff+'_nConstituentsSoftDrop)',
             ])
 
             # extra stuff for subjets
@@ -595,3 +601,20 @@ def makeJetVarsAK8(self, process, JetTag, suff, storeProperties, SkipTag=cms.VIn
 
     return process        
 
+def updateECFs(self, process, ecfs, suff, valueMapName, productName):
+    JetProp = getattr(process,"JetProperties{}".format(suff))
+    new_ecfs = [ecf for ecf in ecfs if ecf not in JetProp.properties] # skip already included
+    JetProp.properties.extend(new_ecfs) # skip already included
+    self.VectorDouble.extend(['JetProperties{1}:{0}(Jets{1}_{0})'.format(_ecf,suff) for _ecf in new_ecfs])
+    for _ecf in ecfs:
+        _ecfName = _ecf
+        _ecf = _ecfName.replace("Full","")
+        _ecfT = _ecf[3:5]
+        _ecfB = _ecf[6]
+        _ecfModPrefix = '{}b{}'.format(_ecfT[0].lower(),_ecfB)
+        if valueMapName is not None:
+            _ecfUserFloat = '{}ValueMap:{}{}{}'.format(valueMapName,_ecfModPrefix,productName,_ecfT)
+        else:
+            _ecfUserFloat = '{}{}:ecf{}'.format(_ecfModPrefix,productName,_ecfT)
+        setattr(JetProp, _ecfName, cms.vstring(_ecfUserFloat))
+    return process

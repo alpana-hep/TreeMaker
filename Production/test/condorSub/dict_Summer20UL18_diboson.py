@@ -1,6 +1,7 @@
 flist = {
 
    "scenario": "Summer20UL18",
+   "args": "jetsconstituents=2 tchannel=True",
    "samples": [
 
        ['Summer20UL18.WWG_TuneCP5_13TeV-amcatnlo-pythia8'],

@@ -169,8 +169,7 @@ wget https://raw.githubusercontent.com/cms-egamma/EgammaPostRecoTools/f38439658b
 scram b -j ${CORES}
 
 # extra setup
-cd TreeMaker/Production/test/condorSub/
-python $CMSSW_BASE/src/Condor/Production/python/linkScripts.py
+$CMSSW_BASE/src/Condor/Production/scripts/postInstall.sh -b $CMSSW_BASE/src/TreeMaker/Production/test/condorSub -c
 
 set +x
 

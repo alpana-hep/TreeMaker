@@ -1,7 +1,7 @@
 flist = {
 
    "scenario": "Summer20UL16APV",
-   "args": "emerging=True",
+   "args": "emerging=True jetsconstituents=2 tchannel=True",
    "samples": [
 
        ['Summer20UL16APV.GJets_DR-0p4_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8'],
