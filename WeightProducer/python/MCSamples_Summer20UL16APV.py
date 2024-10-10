@@ -5,6 +5,7 @@ from TreeMaker.WeightProducer.MCSample import MCSample
 # 13 TeV miniAOD samples - Summer20UL16APV
 Summer20UL16APVsamples = [
     # NB: amcatnlo samples have negative weight events, so NumberEvts = # positive - # negative
+    MCSample('ZLLGJets_MonoPhoton_PtG-15to130_TuneCP5_13TeV-amcatnloFXFX-pythia8', '106X_mcRun2_asymptotic_preVFP_v11-v2', 'RunIISummer20UL16MiniAODAPVv2', 'Constant', 20044295, 12988139),
     MCSample('ZLLGJets_MonoPhoton_PtG-130_TuneCP5_13TeV-amcatnloFXFX-pythia8', '106X_mcRun2_asymptotic_preVFP_v11-v1', 'RunIISummer20UL16MiniAODAPVv2', 'Constant', 266042, 137910),
     MCSample('ZNuNuGJets_MonoPhoton_PtG-130_TuneCP5_13TeV-amcatnloFXFX-pythia8', '106X_mcRun2_asymptotic_preVFP_v11-v1', 'RunIISummer20UL16MiniAODAPVv2', 'Constant', 403043, 204765),
     MCSample('ZNuNuGJets_MonoPhoton_PtG-40to130_TuneCP5_13TeV-amcatnloFXFX-pythia8', '106X_mcRun2_asymptotic_preVFP_v11-v2', 'RunIISummer20UL16MiniAODAPVv2', 'Constant', 2712333, 1619561),
